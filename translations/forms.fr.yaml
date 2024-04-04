@@ -1,0 +1,5 @@
+app.forms.contact.name.label: Nom
+app.forms.contact.email.label: Mail
+app.forms.contact.appointmentDate.label: Date de rendez-vous
+app.forms.contact.message.label: Message
+app.forms.contact.submit.label: Envoyer
