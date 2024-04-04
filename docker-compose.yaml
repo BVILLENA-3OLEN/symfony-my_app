@@ -1,0 +1,40 @@
+services:
+  app:
+    image: 3olen-framework-my_app
+    container_name: my_app-app
+    build:
+      context: ./docker/php
+    volumes:
+    - .:/usr/app
+    networks:
+    - my_app-network
+
+  nginx:
+    image: nginx
+    depends_on:
+    - app
+    volumes:
+    - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    - ./public:/usr/app/public
+    - ./var/log/nginx/:/usr/app/var/log/nginx/
+    ports:
+    - "8000:80"
+    networks:
+    - my_app-network
+
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: pwd
+    ports:
+    - "5432:5432"
+    volumes:
+    - db_data:/var/lib/postgresql/data:rw
+
+volumes:
+  db_data:
+
+networks:
+  my_app-network:
