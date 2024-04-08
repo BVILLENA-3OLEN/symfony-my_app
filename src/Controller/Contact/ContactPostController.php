@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Contact;
 
+use App\Entity\Contact;
 use App\Form\FormType\Contact\ContactType;
 use App\Model\Form\Contact\ContactModel;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +25,8 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ContactPostController extends AbstractController
 {
     public function __construct(
-        private MailerInterface $mailer
+        private MailerInterface $mailer,
+        private EntityManagerInterface $entityManager,
     )
     {
     }
@@ -49,6 +52,7 @@ final class ContactPostController extends AbstractController
                     'message' => $contactModel->getMessage(),
                 ]
             );
+            $this->saveContactEntity($contactModel);
             $this->sendMail($contactModel);
 
             return new Response('Formulaire envoyé !');
@@ -92,5 +96,17 @@ final class ContactPostController extends AbstractController
         );
 
         $this->mailer->send($email);
+    }
+
+    private function saveContactEntity(ContactModel $contactModel): void
+    {
+        $contactEntity = new Contact();
+        $contactEntity->setName($contactModel->getName());
+        $contactEntity->setEmail($contactModel->getEmail());
+        $contactEntity->setAppointmentDate($contactModel->getAppointmentDate());
+        $contactEntity->setMessage($contactModel->getMessage());
+
+        $this->entityManager->persist($contactEntity);
+        $this->entityManager->flush();
     }
 }

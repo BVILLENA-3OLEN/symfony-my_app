@@ -27,6 +27,7 @@ RUN \
 		intl \
 		opcache \
         pdo \
+        pdo_pgsql \
 		zip \
 	&& pecl install \
         apcu  \
