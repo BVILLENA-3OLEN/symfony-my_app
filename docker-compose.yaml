@@ -32,6 +32,16 @@ services:
     - "5432:5432"
     volumes:
     - db_data:/var/lib/postgresql/data:rw
+    networks:
+    - my_app-network
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+    - "1080:1080"
+    - "1025:1025"
+    networks:
+    - my_app-network
 
 volumes:
   db_data:
