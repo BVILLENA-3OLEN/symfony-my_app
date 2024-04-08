@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 id="list-title">Liste des livres</h1>
+
+    <table class="table table-striped" aria-describedby="list-title">
+        <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Nom</th>
+            <th>Auteur</th>
+            <th>Date de publication</th>
+            <th>Nombre d'exemplaires</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author.name }}</td>
+                <td>{{ book.publishedAt|date('d/m/Y') }}</td>
+                <td>{{ book.copyCount }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock body %}
+
