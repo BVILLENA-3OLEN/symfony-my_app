@@ -1,0 +1,15 @@
+<a
+    href="{{ action_path }}"
+    class="{{ html_classes('btn', {
+        "btn-primary": not (is_secondary ?? false) and not (is_danger ?? false) and not (is_warning ?? false) and not (is_info ?? false),
+        "btn-secondary": is_secondary ?? false,
+        "btn-danger": is_danger ?? false,
+        "btn-warning": is_warning ?? false,
+        "btn-info": is_info ?? false,
+    }) }}"
+    {% if action_title %}
+        title="{{ action_title }}"
+    {% endif %}
+>
+    {{ action_label }}
+</a>

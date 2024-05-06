@@ -4,9 +4,11 @@
     <h1 id="list-title">Liste des livres</h1>
 
     <div class="d-flex justify-content-end mt-3">
-        <a href="{{ path('app_book_create') }}" class="btn btn-primary" title="Accéder à la création de livre">
-            Nouveau livre
-        </a>
+        {{ include('_includes/actions/_action_template.html.twig', {
+            action_path: path('app_book_create'),
+            action_title: "Accéder à la création de livre",
+            action_label: "Nouveau livre"
+        }, with_context=false) }}
     </div>
 
     <table class="table table-striped mt-3" aria-describedby="list-title">
@@ -30,13 +32,11 @@
                 <td>{{ book.publishedAt|date('d/m/Y') }}</td>
                 <td>{{ book.copyCount }}</td>
                 <td>
-                    <a
-                        href="{{ path('app_book_update', {id: book.id}) }}"
-                        class="btn btn-primary"
-                        title="Accéder à la page de modification du livre « {{ book.name }} »"
-                    >
-                        Modifier
-                    </a>
+                    {{ include('_includes/actions/_action_template.html.twig', {
+                        action_path: path('app_book_update', {id: book.id}),
+                        action_title: "Accéder à la page de modification du livre « {{ book.name }} »",
+                        action_label: "Modifier"
+                    }, with_context=false) }}
                 </td>
             </tr>
         {% endfor %}
