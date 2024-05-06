@@ -3,7 +3,13 @@
 {% block body %}
     <h1 id="list-title">Liste des livres</h1>
 
-    <table class="table table-striped" aria-describedby="list-title">
+    <div class="d-flex justify-content-end mt-3">
+        <a href="{{ path('app_book_create') }}" class="btn btn-primary" title="Accéder à la création de livre">
+            Nouveau livre
+        </a>
+    </div>
+
+    <table class="table table-striped mt-3" aria-describedby="list-title">
         <thead>
         <tr>
             <th>ISBN</th>
@@ -11,6 +17,7 @@
             <th>Auteur</th>
             <th>Date de publication</th>
             <th>Nombre d'exemplaires</th>
+            <th></th>
         </tr>
         </thead>
 
@@ -22,6 +29,15 @@
                 <td>{{ book.author.name }}</td>
                 <td>{{ book.publishedAt|date('d/m/Y') }}</td>
                 <td>{{ book.copyCount }}</td>
+                <td>
+                    <a
+                        href="{{ path('app_book_update', {id: book.id}) }}"
+                        class="btn btn-primary"
+                        title="Accéder à la page de modification du livre « {{ book.name }} »"
+                    >
+                        Modifier
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

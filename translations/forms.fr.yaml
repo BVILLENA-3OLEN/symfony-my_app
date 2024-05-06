@@ -1,3 +1,23 @@
+# Book
+## Create app_book_create
+app.forms.book.create.isbn.label: ISBN
+app.forms.book.create.name.label: Nom
+app.forms.book.create.author.label: Auteur
+app.forms.book.create.description.label: Description
+app.forms.book.create.publishedAt.label: Date de publication
+app.forms.book.create.copyCount.label: Nombre d'exemplaires
+app.forms.book.create.submit.label: Créer
+
+## Update app_book_update
+app.forms.book.update.isbn.label: ISBN
+app.forms.book.update.name.label: Nom
+app.forms.book.update.author.label: Auteur
+app.forms.book.update.description.label: Description
+app.forms.book.update.publishedAt.label: Date de publication
+app.forms.book.update.copyCount.label: Nombre d'exemplaires
+app.forms.book.update.submit.label: Sauvegarder
+
+# Contact
 app.forms.contact.name.label: Nom
 app.forms.contact.email.label: Mail
 app.forms.contact.appointmentDate.label: Date de rendez-vous

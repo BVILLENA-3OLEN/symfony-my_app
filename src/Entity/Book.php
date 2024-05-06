@@ -55,7 +55,7 @@ class Book
         return $this->isbn;
     }
 
-    public function setIsbn(string $isbn): static
+    public function setIsbn(?string $isbn): static
     {
         $this->isbn = $isbn;
 
@@ -67,7 +67,7 @@ class Book
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -79,7 +79,7 @@ class Book
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -91,7 +91,7 @@ class Book
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeInterface $publishedAt): static
+    public function setPublishedAt(?\DateTimeInterface $publishedAt): static
     {
         $this->publishedAt = $publishedAt;
 
@@ -103,7 +103,7 @@ class Book
         return $this->copyCount;
     }
 
-    public function setCopyCount(int $copyCount): static
+    public function setCopyCount(?int $copyCount): static
     {
         $this->copyCount = $copyCount;
 

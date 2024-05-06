@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Modifier livre #{{ book.id }}</h1>
+
+    <article class="d-flex justify-content-end">
+        <a
+            href="{{ path('app_book_list') }}"
+            class="btn btn-secondary"
+            title="Retourner sur la page de la liste des livres"
+        >
+            Retourner à la liste
+        </a>
+    </article>
+
+    <article>
+        {{ form(book_form) }}
+    </article>
+{% endblock body %}
