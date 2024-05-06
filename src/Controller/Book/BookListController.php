@@ -18,7 +18,7 @@ final class BookListController extends AbstractController
         return $this->render(
             view: 'book/list.html.twig',
             parameters: [
-                'books' => $bookRepository->findAll(),
+                'books' => $bookRepository->getList(),
             ]
         );
     }
