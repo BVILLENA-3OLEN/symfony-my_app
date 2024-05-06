@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Book\Create;
 
 use App\Entity\Book;
-use App\Form\FormType\Book\Create\CreateBookType;
+use App\Enum\Form\Options\CrudActionEnum;
+use App\Form\FormType\Book\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,13 @@ final class BookCreatePostController extends AbstractController
     public function __invoke(Request $request): Response
     {
         $newBook = new Book();
-        $bookForm = $this->createForm(type: CreateBookType::class, data: $newBook);
+        $bookForm = $this->createForm(
+            type: BookType::class,
+            data: $newBook,
+            options: [
+                'crud_action' => CrudActionEnum::CREATE,
+            ]
+        );
 
         $bookForm->handleRequest($request);
         if ($bookForm->isSubmitted() && $bookForm->isValid()) {

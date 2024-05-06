@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Book\Update;
 
 use App\Entity\Book;
-use App\Form\FormType\Book\Update\UpdateBookType;
+use App\Enum\Form\Options\CrudActionEnum;
+use App\Form\FormType\Book\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,13 @@ final class BookUpdatePostController extends AbstractController
 
     public function __invoke(Request $request, Book $book): Response
     {
-        $bookForm = $this->createForm(type: UpdateBookType::class, data: $book);
+        $bookForm = $this->createForm(
+            type: BookType::class,
+            data: $book,
+            options: [
+                'crud_action' => CrudActionEnum::UPDATE,
+            ]
+        );
 
         $bookForm->handleRequest($request);
         if ($bookForm->isSubmitted() && $bookForm->isValid()) {

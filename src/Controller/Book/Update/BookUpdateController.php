@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Book\Update;
 
 use App\Entity\Book;
-use App\Form\FormType\Book\Update\UpdateBookType;
+use App\Enum\Form\Options\CrudActionEnum;
+use App\Form\FormType\Book\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,7 +19,13 @@ final class BookUpdateController extends AbstractController
         return $this->render(
             view: 'book/update/update.html.twig',
             parameters: [
-                'book_form' => $this->createForm(type: UpdateBookType::class, data: $book),
+                'book_form' => $this->createForm(
+                    type: BookType::class,
+                    data: $book,
+                    options: [
+                        'crud_action' => CrudActionEnum::UPDATE,
+                    ]
+                ),
                 'book' => $book,
             ]
         );

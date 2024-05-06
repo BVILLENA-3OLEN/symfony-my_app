@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Form\FormType\Book\Create;
+namespace App\Form\FormType\Book;
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Enum\Form\Options\CrudActionEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -22,7 +23,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
-final class CreateBookType extends AbstractType
+final class BookType extends AbstractType
 {
     public function buildForm(
         FormBuilderInterface $builder,
@@ -33,18 +34,19 @@ final class CreateBookType extends AbstractType
                 child: 'isbn',
                 type: TextType::class,
                 options: [
-                    'label' => 'app.forms.book.create.isbn.label',
+                    'label' => 'app.forms.book.isbn.label',
                     'constraints' => [
                         new NotBlank(),
                         new Isbn(type: Isbn::ISBN_13),
                     ],
+                    'disabled' => $options['crud_action'] === CrudActionEnum::UPDATE,
                 ]
             )
             ->add(
                 child: 'name',
                 type: TextType::class,
                 options: [
-                    'label' => 'app.forms.book.create.name.label',
+                    'label' => 'app.forms.book.name.label',
                     'constraints' => [
                         new NotBlank(),
                         new Length(max: 200),
@@ -57,7 +59,7 @@ final class CreateBookType extends AbstractType
                 options: [
                     'class' => Author::class,
                     'choice_label' => static fn (Author $author): string => $author->getName(),
-                    'label' => 'app.forms.book.create.author.label',
+                    'label' => 'app.forms.book.author.label',
                     'constraints' => [
                         new NotNull(),
                     ],
@@ -67,7 +69,7 @@ final class CreateBookType extends AbstractType
                 child: 'description',
                 type: TextareaType::class,
                 options: [
-                    'label' => 'app.forms.book.create.description.label',
+                    'label' => 'app.forms.book.description.label',
                 ],
             )
             ->add(
@@ -75,7 +77,7 @@ final class CreateBookType extends AbstractType
                 type: DateType::class,
                 options: [
                     'widget' => 'single_text',
-                    'label' => 'app.forms.book.create.publishedAt.label',
+                    'label' => 'app.forms.book.publishedAt.label',
                     'constraints' => [
                         new NotNull(),
                         new LessThan(value: 'today'),
@@ -86,7 +88,7 @@ final class CreateBookType extends AbstractType
                 child: 'copyCount',
                 type: IntegerType::class,
                 options: [
-                    'label' => 'app.forms.book.create.copyCount.label',
+                    'label' => 'app.forms.book.copyCount.label',
                     'constraints' => [
                         new NotNull(),
                         new PositiveOrZero(),
@@ -97,7 +99,7 @@ final class CreateBookType extends AbstractType
                 child: 'submit',
                 type: SubmitType::class,
                 options: [
-                    'label' => 'app.forms.book.create.submit.label',
+                    'label' => 'app.forms.book.' . mb_strtolower($options['crud_action']->name) . '.submit.label',
                 ]
             );
     }
@@ -107,5 +109,10 @@ final class CreateBookType extends AbstractType
         $resolver
             ->setDefault(option: 'data_class', value: Book::class)
             ->setDefault(option: 'translation_domain', value: 'forms');
+
+        $resolver
+            ->define('crud_action')
+            ->required()
+            ->allowedTypes(CrudActionEnum::class);
     }
 }
