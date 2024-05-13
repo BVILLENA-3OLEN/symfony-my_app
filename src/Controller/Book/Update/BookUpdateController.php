@@ -10,8 +10,10 @@ use App\Form\FormType\Book\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/books/{id}/update', name: 'app_book_update', methods: 'GET')]
+#[IsGranted(attribute: 'ROLE_ADMIN')]
 final class BookUpdateController extends AbstractController
 {
     public function __invoke(Book $book): Response

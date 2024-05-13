@@ -9,8 +9,10 @@ use App\Form\FormType\Book\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/books/create', name: 'app_book_create', methods: 'GET')]
+#[IsGranted(attribute: 'ROLE_ADMIN')]
 final class BookCreateController extends AbstractController
 {
     public function __invoke(): Response
