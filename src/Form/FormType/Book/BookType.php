@@ -7,6 +7,8 @@ namespace App\Form\FormType\Book;
 use App\Entity\Author;
 use App\Entity\Book;
 use App\Enum\Form\Options\CrudActionEnum;
+use App\Repository\AuthorRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -58,6 +60,11 @@ final class BookType extends AbstractType
                 type: EntityType::class,
                 options: [
                     'class' => Author::class,
+                    'query_builder' => static fn (AuthorRepository $repository): QueryBuilder => (
+                        $repository
+                            ->createQueryBuilder('a')
+                            ->orderBy('a.name')
+                    ),
                     'choice_label' => static fn (Author $author): string => $author->getName(),
                     'label' => 'app.forms.book.author.label',
                     'constraints' => [
