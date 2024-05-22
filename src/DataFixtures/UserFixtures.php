@@ -2,13 +2,16 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Role;
 use App\Entity\User;
+use App\Enum\Entity\Role\RoleEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
-final class UserFixtures extends Fixture
+final class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
         private readonly PasswordHasherFactoryInterface $passwordHasherFactory,
@@ -24,7 +27,9 @@ final class UserFixtures extends Fixture
                     ->getPasswordHasher(User::class)
                     ->hash('admin')
             )
-            ->setRoles(['ROLE_ADMIN'])
+            ->addRole(
+                role: $this->getReference(name: RoleEnum::ROLE_ADMIN->value, class: Role::class)
+            )
             ->setIsVerified(true)
         );
 
@@ -42,5 +47,12 @@ final class UserFixtures extends Fixture
             );
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            RoleFixtures::class,
+        ];
     }
 }
