@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Book;
 
+use App\Enum\Entity\Role\RoleEnum;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,8 @@ final class BookListController extends AbstractController
             view: 'book/list.html.twig',
             parameters: [
                 'books' => $bookRepository->getList(),
+                'can_create_book' => $this->isGranted(RoleEnum::ROLE_ADMIN->value),
+                'can_update_book' => $this->isGranted(RoleEnum::ROLE_ADMIN->value),
             ]
         );
     }
