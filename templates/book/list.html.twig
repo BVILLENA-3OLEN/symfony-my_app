@@ -4,11 +4,13 @@
     <h1 id="list-title">Liste des livres</h1>
 
     <div class="d-flex justify-content-end mt-3">
-        {{ include('_includes/actions/_action_template.html.twig', {
-            action_path: path('app_book_create'),
-            action_title: "Accéder à la création de livre",
-            action_label: "Nouveau livre"
-        }, with_context=false) }}
+        {% if can_create_book %}
+            {{ include('_includes/actions/_action_template.html.twig', {
+                action_path: path('app_book_create'),
+                action_title: "Accéder à la création de livre",
+                action_label: "Nouveau livre"
+            }, with_context=false) }}
+        {% endif %}
     </div>
 
     <table class="table table-striped mt-3" aria-describedby="list-title">
@@ -32,11 +34,13 @@
                 <td>{{ book.publishedAt|date('d/m/Y') }}</td>
                 <td>{{ book.copyCount }}</td>
                 <td>
-                    {{ include('_includes/actions/_action_template.html.twig', {
-                        action_path: path('app_book_update', {id: book.id}),
-                        action_title: "Accéder à la page de modification du livre « {{ book.name }} »",
-                        action_label: "Modifier"
-                    }, with_context=false) }}
+                    {% if can_update_book %}
+                        {{ include('_includes/actions/_action_template.html.twig', {
+                            action_path: path('app_book_update', {id: book.id}),
+                            action_title: "Accéder à la page de modification du livre « {{ book.name }} »",
+                            action_label: "Modifier"
+                        }, with_context=false) }}
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
