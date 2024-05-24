@@ -40,6 +40,11 @@ final class BookCreatePostController extends AbstractController
             $this->entityManager->persist($newBook);
             $this->entityManager->flush();
 
+            $this->addFlash(
+                type: 'success',
+                message: 'Livre ajouté avec succès !'
+            );
+
             return $this->redirectToRoute(route: 'app_book_list');
         }
 

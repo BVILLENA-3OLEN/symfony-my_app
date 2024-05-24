@@ -38,6 +38,11 @@ final class BookUpdatePostController extends AbstractController
         if ($bookForm->isSubmitted() && $bookForm->isValid()) {
             $this->entityManager->flush();
 
+            $this->addFlash(
+                type: 'success',
+                message: 'Livre mis à jour avec succès !'
+            );
+
             return $this->redirectToRoute(route: 'app_book_list');
         }
 
