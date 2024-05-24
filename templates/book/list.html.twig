@@ -34,11 +34,29 @@
                 <td>{{ book.publishedAt|date('d/m/Y') }}</td>
                 <td>{{ book.copyCount }}</td>
                 <td>
+                    {% if is_granted('can_remove_copy_book', book) %}
+                        {{ include('_includes/actions/_action_template.html.twig', {
+                            action_path: path('app_book_remove_copy', {id: book.id}),
+                            action_title: "Supprimer un exemplaire",
+                            action_label: "-",
+                            is_danger: true
+                        }, with_context=false) }}
+                    {% endif %}
+
                     {% if can_update_book %}
                         {{ include('_includes/actions/_action_template.html.twig', {
                             action_path: path('app_book_update', {id: book.id}),
                             action_title: "Accéder à la page de modification du livre « {{ book.name }} »",
                             action_label: "Modifier"
+                        }, with_context=false) }}
+                    {% endif %}
+
+                    {% if is_granted('can_delete_book', book) %}
+                        {{ include('_includes/actions/_action_template.html.twig', {
+                            action_path: path('app_book_delete', {id: book.id}),
+                            action_title: "Réaliser la suppression du livre « {{ book.name }} »",
+                            action_label: "Supprimer",
+                            is_danger: true
                         }, with_context=false) }}
                     {% endif %}
                 </td>

@@ -27,6 +27,7 @@ class BookRepository extends ServiceEntityRepository
             ->createQueryBuilder(alias: 'b')
             ->innerJoin(join: 'b.author', alias: 'a')
             ->addSelect('a')
+            ->where('b.deleted = FALSE')
             ->orderBy('b.name')
             ->getQuery()
             ->execute();

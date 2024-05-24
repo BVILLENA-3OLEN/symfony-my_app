@@ -33,6 +33,9 @@ class Book
     #[ORM\Column]
     private ?int $copyCount = 0;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $deleted = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Book
     public function setCopyCount(?int $copyCount): static
     {
         $this->copyCount = $copyCount;
+
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): static
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
