@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{{ page_title ?? 'My App - Symfony' }}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
         {% endblock %}
@@ -12,16 +12,26 @@
         {% endblock %}
     </head>
     <body>
-        <div class="container">
-            {% for type, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ type }} mx-2">
-                        {{ message }}
-                    </div>
+        {% if app.user is not null %}
+            {{ include('_includes/layout/_navbar.html.twig', {user: app.user}, with_context=false) }}
+        {% endif %}
+
+        <main class="container">
+            {% block title %}
+                <h1>{{ title_content }}</h1>
+            {% endblock title %}
+
+            {% if use_flash ?? true %}
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }} my-2" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            {% endif %}
 
             {% block body %}{% endblock %}
-        </div>
+        </main>
     </body>
 </html>

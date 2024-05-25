@@ -1,7 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
+{% set page_title = 'Livres' %}
+
+{% block title %}
+    <h1 id="list-title">Liste des livres</h1>
+{% endblock title %}
 
 {% block body %}
-    <h1 id="list-title">Liste des livres</h1>
 
     <div class="d-flex justify-content-end mt-3">
         {% if can_create_book %}

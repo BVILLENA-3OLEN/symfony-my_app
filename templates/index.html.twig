@@ -1,7 +1,6 @@
 {% extends "base.html.twig" %}
+{% set title_content = 'Hello there!' %}
 
 {% block body %}
-    <h1>Hello there!</h1>
-    {# Nous allons dire obnjour à quelqu'un #}
     <h2>{{ name | default('General Kenobi') }}</h2>
 {% endblock %}
