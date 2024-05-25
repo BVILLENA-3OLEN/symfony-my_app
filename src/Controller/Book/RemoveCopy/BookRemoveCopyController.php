@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Book\RemoveCopy;
 
 use App\Entity\Book;
+use App\Enum\Voter\Book\BookAttributeEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ final class BookRemoveCopyController extends AbstractController
     public function __invoke(Book $book): Response
     {
         $this->denyAccessUnlessGranted(
-            attribute: 'can_remove_copy_book',
+            attribute: BookAttributeEnum::CAN_REMOVE_COPY_BOOK->name,
             subject: $book
         );
 
